@@ -52,8 +52,16 @@ public class TransportCard
             throw new ArgumentOutOfRangeException(nameof(amount), "Amount must be positive");
         }
 
-        var deposit = new Transaction(-amount, DateTime.UtcNow);
-        _allTransactions.Add(deposit);
+        if (Balance - amount < 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(amount), "insufficient load");
+        }
+        else
+        {
+
+            var deposit = new Transaction(-amount, DateTime.UtcNow);
+            _allTransactions.Add(deposit);
+        }
     }
 
     private List<Transaction> _allTransactions = new List<Transaction>();
